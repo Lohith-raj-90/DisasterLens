@@ -34,8 +34,8 @@ export default function Map({ signals, activeSignalId, onMarkerClick }: any) {
 
     return L.divIcon({
       className: '',
-      html: `<div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%; box-shadow: 0 0 10px ${color}; border: 2px solid white;"></div>`,
-      iconSize: [20, 20]
+      html: `<div style="background-color: ${color}; width: 18px; height: 18px; border-radius: 50%; box-shadow: 0 0 12px ${color}, 0 0 24px ${color}40; border: 2px solid white;"></div>`,
+      iconSize: [22, 22]
     });
   };
 
