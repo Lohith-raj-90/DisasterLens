@@ -168,11 +168,17 @@ body {
   height: 28px;
   border-radius: 14px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
   background: #374151;
+}
+.toggle-switch:hover {
+  box-shadow: 0 0 12px rgba(74, 14, 143, 0.3);
 }
 .toggle-switch.active {
   background: linear-gradient(135deg, var(--color-purple-royal), var(--color-purple-core));
+}
+.toggle-switch.active:hover {
+  box-shadow: 0 0 16px rgba(124, 58, 237, 0.4);
 }
 .toggle-switch .toggle-knob {
   position: absolute;
@@ -203,18 +209,20 @@ body {
   animation: gradientShift 4s ease infinite, breathe 2s ease-in-out infinite;
   border: none;
   overflow: hidden;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
 }
 .btn-hyper-purple:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 12px 50px rgba(74, 14, 143, 0.5), 0 0 30px rgba(124, 58, 237, 0.3);
+  animation-play-state: paused, paused;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 50px rgba(74, 14, 143, 0.5), 0 0 30px rgba(124, 58, 237, 0.3);
 }
 .btn-hyper-purple:focus-visible {
   outline: 2px solid var(--color-purple-light);
   outline-offset: 3px;
 }
 .btn-hyper-purple:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
+  transition-duration: 0.1s;
 }
 .btn-hyper-purple::before {
   content: '';
@@ -236,11 +244,12 @@ body {
   animation: gradientShift 4s ease infinite, breathe 2s ease-in-out infinite;
   border: 2px solid rgba(212, 168, 67, 0.3);
   overflow: hidden;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .btn-hyper-gold:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 12px 50px rgba(212, 168, 67, 0.4), 0 0 30px rgba(255, 215, 0, 0.2);
+  animation-play-state: paused, paused;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 50px rgba(212, 168, 67, 0.4), 0 0 30px rgba(255, 215, 0, 0.2);
   border-color: rgba(212, 168, 67, 0.6);
 }
 .btn-hyper-gold:focus-visible {
@@ -248,7 +257,8 @@ body {
   outline-offset: 3px;
 }
 .btn-hyper-gold:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
+  transition-duration: 0.1s;
 }
 .btn-hyper-gold::before {
   content: '';
@@ -279,11 +289,11 @@ body {
   background-size: 400% 400%;
   animation: gradientShift 3s ease infinite;
   box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, filter 0.3s ease;
 }
 .btn-action-dispatch:hover {
-  transform: translateY(-1px) scale(1.03);
-  box-shadow: 0 6px 28px rgba(245, 158, 11, 0.45);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
   filter: brightness(1.1);
 }
 .btn-action-dispatch:focus-visible {
@@ -291,7 +301,8 @@ body {
   outline-offset: 2px;
 }
 .btn-action-dispatch:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
+  transition-duration: 0.1s;
 }
 
 .btn-action-dispatch-pulse {
@@ -299,11 +310,12 @@ body {
   background-size: 400% 400%;
   animation: gradientShift 3s ease infinite, pulseGlow 2s ease-in-out infinite;
   box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, filter 0.3s ease;
 }
 .btn-action-dispatch-pulse:hover {
-  transform: translateY(-1px) scale(1.03);
-  box-shadow: 0 6px 28px rgba(245, 158, 11, 0.45);
+  animation-play-state: paused, running;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
   filter: brightness(1.1);
 }
 .btn-action-dispatch-pulse:focus-visible {
@@ -311,7 +323,8 @@ body {
   outline-offset: 2px;
 }
 .btn-action-dispatch-pulse:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
+  transition-duration: 0.1s;
 }
 
 .btn-action-resolve {
@@ -319,11 +332,11 @@ body {
   background-size: 400% 400%;
   animation: gradientShift 3s ease infinite;
   box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, filter 0.3s ease;
 }
 .btn-action-resolve:hover {
-  transform: translateY(-1px) scale(1.03);
-  box-shadow: 0 6px 28px rgba(16, 185, 129, 0.45);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.5);
   filter: brightness(1.1);
 }
 .btn-action-resolve:focus-visible {
@@ -331,18 +344,19 @@ body {
   outline-offset: 2px;
 }
 .btn-action-resolve:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
+  transition-duration: 0.1s;
 }
 
 .btn-sos {
   background: linear-gradient(135deg, #dc2626, #ef4444);
   box-shadow: 0 8px 30px rgba(239, 68, 68, 0.3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, filter 0.3s ease;
 }
 .btn-sos:hover {
   background: linear-gradient(135deg, #ef4444, #f87171);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(239, 68, 68, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px rgba(239, 68, 68, 0.5);
   filter: brightness(1.1);
 }
 .btn-sos:focus-visible {
@@ -350,7 +364,8 @@ body {
   outline-offset: 3px;
 }
 .btn-sos:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
+  transition-duration: 0.1s;
 }
 .btn-sos:disabled {
   opacity: 0.5;
@@ -361,7 +376,7 @@ body {
   background: var(--color-bg-secondary);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--color-text-secondary);
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 .btn-ghost:hover {
   background: var(--color-bg-secondary);
@@ -374,19 +389,25 @@ body {
 }
 .btn-ghost:active {
   transform: scale(0.97);
+  transition-duration: 0.1s;
 }
 
 /* Gradient helper classes */
 .gradient-purple {
   background: linear-gradient(135deg, var(--color-purple-royal), var(--color-purple-core));
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, filter 0.3s ease;
 }
 .gradient-purple:hover {
-  filter: brightness(1.1);
+  filter: brightness(1.15);
+  box-shadow: 0 4px 20px rgba(74, 14, 143, 0.3);
 }
 .gradient-purple:focus-visible {
   outline: 2px solid var(--color-purple-light);
   outline-offset: 2px;
+}
+.gradient-purple:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
 }
 .gradient-purple-hover {
   background: linear-gradient(135deg, var(--color-purple-mid), var(--color-purple-light));
