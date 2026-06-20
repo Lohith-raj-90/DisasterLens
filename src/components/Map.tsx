@@ -3,7 +3,12 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { useEffect } from 'react';
 
-// Custom Map Panning Component
+const COLORS = {
+  critical: '#ef4444',
+  high: '#f97316',
+  medium: '#eab308',
+} as const;
+
 function MapUpdater({ center }: { center: [number, number] }) {
   const map = useMap();
   useEffect(() => {
@@ -23,14 +28,10 @@ export default function Map({ signals, activeSignalId, onMarkerClick }: any) {
     }
   }
 
-  // Define custom icons
   const createIcon = (priority: string | number) => {
     const p = Number(priority);
-    const isCritical = p >= 60; // 60+ is Critical in our logic
-    const isHigh = p >= 35 && p < 60;
-    
-    let color = isCritical ? '#ef4444' : (isHigh ? '#f97316' : '#eab308');
-    
+    const color = p >= 60 ? COLORS.critical : (p >= 35 ? COLORS.high : COLORS.medium);
+
     return L.divIcon({
       className: '',
       html: `<div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%; box-shadow: 0 0 10px ${color}; border: 2px solid white;"></div>`,
@@ -40,18 +41,17 @@ export default function Map({ signals, activeSignalId, onMarkerClick }: any) {
 
   return (
     <MapContainer center={defaultCenter} zoom={12} style={{ height: '100%', width: '100%', zIndex: 10 }}>
-      {/* Dark map variation using filter on CSS, or standardized tile layer */}
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         attribution='&copy; <a href="https://carto.com/">CartoDB</a>'
       />
-      
+
       <MapUpdater center={activeCenter} />
 
       {signals.map((sig: any) => sig.location_lat && (
-        <Marker 
-          key={sig.id} 
-          position={[sig.location_lat, sig.location_lng]} 
+        <Marker
+          key={sig.id}
+          position={[sig.location_lat, sig.location_lng]}
           icon={createIcon(sig.priority_score)}
           eventHandlers={{ click: () => onMarkerClick(sig.id) }}
         >

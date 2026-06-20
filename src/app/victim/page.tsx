@@ -15,7 +15,7 @@ export default function VictimDashboard() {
   const [offlineQueue, setOfflineQueue] = useState<any[]>([]);
   const [toast, setToast] = useState<{msg: string, type: 'success'|'error'|'info'} | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
-  
+
   const [formData, setFormData] = useState({
     disaster_type: 'Medical',
     injury_severity: 'Severe',
@@ -85,7 +85,7 @@ export default function VictimDashboard() {
           setStatus('SENT');
           showToast(`🚨 SOS Transmitted — AI Rank: ${data.rank} (Score: ${data.score}/100)`, 'success');
         }
-      } catch { 
+      } catch {
         showToast('❌ Failed to transmit SOS', 'error');
       }
     } else {
@@ -127,23 +127,21 @@ export default function VictimDashboard() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-[#0a1628] text-white overflow-hidden" style={{ fontFamily: "'Outfit', sans-serif" }}>
-      {/* Toast Notification */}
+    <div className="h-screen flex flex-col bg-[var(--color-bg-primary)] text-white overflow-hidden" style={{ fontFamily: "var(--font-display)" }}>
       {toast && (
         <div className={`fixed top-4 right-4 z-[100] px-5 py-3 rounded-xl shadow-2xl text-sm font-semibold flex items-center gap-2 animate-[slideUp_0.3s_ease] ${
-          toast.type === 'success' ? 'bg-emerald-600 text-white' : 
-          toast.type === 'error' ? 'bg-red-600 text-white' : 
-          'bg-[#4a0e8f] text-white'
+          toast.type === 'success' ? 'bg-emerald-600 text-white' :
+          toast.type === 'error' ? 'bg-red-600 text-white' :
+          'bg-[var(--color-purple-royal)] text-white'
         }`}>
           {toast.msg}
           <button onClick={() => setToast(null)} className="ml-2 opacity-60 hover:opacity-100">✕</button>
         </div>
       )}
 
-      {/* Header */}
-      <header className="h-16 bg-[#0f2042]/90 border-b border-purple-500/10 flex items-center justify-between px-5 z-20 backdrop-blur-md shrink-0">
+      <header className="h-16 bg-[var(--color-bg-secondary)]/90 border-b border-purple-500/10 flex items-center justify-between px-5 z-20 backdrop-blur-md shrink-0">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push('/')} className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#4a0e8f] to-[#7c3aed] flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform">
+          <button onClick={() => router.push('/')} className="w-9 h-9 rounded-xl gradient-purple flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform">
             <i className="fa-solid fa-shield-halved text-white text-sm"></i>
           </button>
           <div>
@@ -156,7 +154,7 @@ export default function VictimDashboard() {
           <span className="text-xs font-bold uppercase tracking-wider text-slate-400">{isOnline ? 'Online' : 'Offline'}</span>
           <div
             className={`toggle-switch ${isOnline ? 'active' : ''}`}
-            style={{ background: isOnline ? 'linear-gradient(135deg, #4a0e8f, #7c3aed)' : '#374151' }}
+            style={{ background: isOnline ? 'linear-gradient(135deg, var(--color-purple-royal), var(--color-purple-core))' : '#374151' }}
             onClick={() => { setIsOnline(!isOnline); showToast(isOnline ? '📡 Switched to Mesh Offline Mode' : '🌐 Back Online — Syncing...', 'info'); }}
           >
             <div className="toggle-knob"></div>
@@ -171,9 +169,7 @@ export default function VictimDashboard() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="flex-1 flex overflow-hidden">
-        {/* Left Panel — SOS + Map */}
         <div className="w-[420px] flex flex-col border-r border-white/5 shrink-0">
           <div className="h-48 shrink-0 relative">
             {isOnline ? (
@@ -187,7 +183,7 @@ export default function VictimDashboard() {
                 battery_level: formData.battery_level
               }]} activeSignalId={null} onMarkerClick={() => {}} />
             ) : (
-              <div className="h-full w-full bg-[#0f2042] flex flex-col items-center justify-center">
+              <div className="h-full w-full bg-[var(--color-bg-secondary)] flex flex-col items-center justify-center">
                 <div className="w-20 h-20 rounded-full border border-amber-500/20 flex items-center justify-center relative mb-3">
                   <div className="absolute inset-0 rounded-full radar-sweep"></div>
                   <i className="fa-solid fa-wifi text-amber-500/50 text-xl relative z-10"></i>
@@ -210,13 +206,12 @@ export default function VictimDashboard() {
               <p className="text-[10px] text-slate-500">Fill all fields for accurate AI triage scoring.</p>
             </div>
 
-            {/* Emergency Type */}
             <div>
               <label className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-1 block">Emergency Type</label>
-              <select 
-                value={formData.disaster_type} 
+              <select
+                value={formData.disaster_type}
                 onChange={e => setFormData({...formData, disaster_type: e.target.value})}
-                className="w-full bg-[#0f2042] border border-purple-500/20 rounded-xl p-2.5 text-white font-semibold outline-none focus:border-[#d4a843] transition text-sm"
+                className="w-full bg-[var(--color-bg-secondary)] border border-purple-500/20 rounded-xl p-2.5 text-white font-semibold outline-none focus:border-[var(--color-gold)] transition text-sm"
               >
                 <option value="Medical">🩺 Medical Emergency</option>
                 <option value="Trapped">🏚️ Structural Collapse / Trapped</option>
@@ -227,29 +222,27 @@ export default function VictimDashboard() {
               </select>
             </div>
 
-            {/* Severity */}
             <div>
               <label className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-1 block">Injury Severity</label>
               <div className="flex gap-2">
                 {['Minor', 'Moderate', 'Severe'].map(s => (
                   <button key={s} onClick={() => setFormData({...formData, injury_severity: s})}
-                    className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all active:scale-95 ${formData.injury_severity === s 
-                      ? 'bg-gradient-to-r from-[#4a0e8f] to-[#7c3aed] text-white shadow-lg shadow-purple-500/20' 
-                      : 'bg-[#0f2042] border border-white/5 text-slate-400 hover:border-purple-500/30'}`}>
+                    className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all active:scale-95 ${formData.injury_severity === s
+                      ? 'gradient-purple text-white shadow-lg shadow-purple-500/20'
+                      : 'bg-[var(--color-bg-secondary)] border border-white/5 text-slate-400 hover:border-purple-500/30'}`}>
                     {s === 'Minor' ? '🟢' : s === 'Moderate' ? '🟡' : '🔴'} {s}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Group Size + Environment — NEW */}
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-1 block">Group Size</label>
-                <select 
-                  value={formData.group_size} 
+                <select
+                  value={formData.group_size}
                   onChange={e => setFormData({...formData, group_size: parseInt(e.target.value)})}
-                  className="w-full bg-[#0f2042] border border-white/5 rounded-xl p-2.5 text-white font-semibold outline-none focus:border-[#d4a843] transition text-sm"
+                  className="w-full bg-[var(--color-bg-secondary)] border border-white/5 rounded-xl p-2.5 text-white font-semibold outline-none focus:border-[var(--color-gold)] transition text-sm"
                 >
                   <option value={1}>👤 1 Person</option>
                   <option value={2}>👥 2 People</option>
@@ -260,10 +253,10 @@ export default function VictimDashboard() {
               </div>
               <div>
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-1 block">Conditions</label>
-                <select 
-                  value={formData.environment} 
+                <select
+                  value={formData.environment}
                   onChange={e => setFormData({...formData, environment: e.target.value})}
-                  className="w-full bg-[#0f2042] border border-white/5 rounded-xl p-2.5 text-white font-semibold outline-none focus:border-[#d4a843] transition text-sm"
+                  className="w-full bg-[var(--color-bg-secondary)] border border-white/5 rounded-xl p-2.5 text-white font-semibold outline-none focus:border-[var(--color-gold)] transition text-sm"
                 >
                   <option value="Normal">☀️ Normal</option>
                   <option value="Night">🌙 Nighttime</option>
@@ -273,39 +266,37 @@ export default function VictimDashboard() {
               </div>
             </div>
 
-            {/* System Readings */}
             <div className="flex gap-2">
-              <div className="flex-1 bg-[#0f2042] border border-white/5 rounded-xl p-2.5 flex items-center justify-between">
+              <div className="flex-1 bg-[var(--color-bg-secondary)] border border-white/5 rounded-xl p-2.5 flex items-center justify-between">
                 <span className="text-[10px] text-slate-500 font-bold uppercase"><i className="fa-solid fa-battery-half mr-1"></i>Power</span>
                 <span className={`font-bold text-sm ${formData.battery_level < 20 ? 'text-red-400 animate-pulse' : 'text-emerald-400'}`}>{formData.battery_level}%</span>
               </div>
-              <div className="flex-1 bg-[#0f2042] border border-white/5 rounded-xl p-2.5 flex items-center justify-between">
+              <div className="flex-1 bg-[var(--color-bg-secondary)] border border-white/5 rounded-xl p-2.5 flex items-center justify-between">
                 <span className="text-[10px] text-slate-500 font-bold uppercase"><i className="fa-solid fa-satellite mr-1"></i>GPS</span>
                 <span className="font-bold text-sm text-emerald-400">LOCKED</span>
               </div>
             </div>
 
-            {/* SOS Button or Confirmation */}
             {status === 'SENT' ? (
-              <div className="bg-gradient-to-r from-purple-900/30 to-[#0f2042] border border-purple-500/20 rounded-2xl p-4">
+              <div className="bg-gradient-to-r from-purple-900/30 to-[var(--color-bg-secondary)] border border-purple-500/20 rounded-2xl p-4">
                 <h4 className="font-bold text-purple-300 flex items-center gap-2 mb-2">
-                  <i className="fa-solid fa-check-circle text-[#d4a843]"></i> Signal Transmitted
+                  <i className="fa-solid fa-check-circle text-[var(--color-gold)]"></i> Signal Transmitted
                 </h4>
                 <p className="text-[11px] text-slate-400 mb-2">AI Command logged your coordinates. Rescue routing in progress.</p>
-                <div className="bg-[#0a1628] rounded-lg p-2.5 text-xs font-bold flex justify-between items-center">
+                <div className="bg-[var(--color-bg-primary)] rounded-lg p-2.5 text-xs font-bold flex justify-between items-center">
                   <span className="text-slate-400">Unit Dispatch</span>
-                  <span className="text-[#d4a843] animate-pulse">Routing...</span>
+                  <span className="text-[var(--color-gold)] animate-pulse">Routing...</span>
                 </div>
-                <button 
+                <button
                   onClick={() => setStatus('IDLE')}
-                  className="w-full mt-3 py-2 bg-[#0f2042] border border-white/10 text-slate-400 text-xs font-bold rounded-xl hover:bg-[#0f2042]/80 transition active:scale-95"
+                  className="w-full mt-3 py-2 bg-[var(--color-bg-secondary)] border border-white/10 text-slate-400 text-xs font-bold rounded-xl hover:bg-[var(--color-bg-secondary)]/80 transition active:scale-95"
                 >
                   <i className="fa-solid fa-rotate-left mr-1"></i> Send Another SOS
                 </button>
               </div>
             ) : (
-              <button 
-                onClick={sendSOS} 
+              <button
+                onClick={sendSOS}
                 disabled={loading}
                 className="w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-extrabold text-lg py-4 rounded-2xl shadow-[0_8px_30px_rgba(239,68,68,0.3)] active:scale-95 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
               >
@@ -321,10 +312,9 @@ export default function VictimDashboard() {
           </div>
         </div>
 
-        {/* Right Panel — Two-Way Chat */}
-        <div className="flex-1 flex flex-col bg-[#080e1a]">
-          <div className="h-12 bg-[#0f2042]/60 border-b border-white/5 flex items-center px-5 shrink-0">
-            <i className="fa-solid fa-comments text-[#d4a843] mr-3"></i>
+        <div className="flex-1 flex flex-col bg-[var(--color-bg-deep)]">
+          <div className="h-12 bg-[var(--color-bg-secondary)]/60 border-b border-white/5 flex items-center px-5 shrink-0">
+            <i className="fa-solid fa-comments text-[var(--color-gold)] mr-3"></i>
             <h2 className="font-bold text-white text-sm">Live Communication</h2>
             <span className="ml-auto text-[10px] font-bold uppercase tracking-widest text-slate-500">
               {isOnline ? '● Server Connected' : '○ Offline Cache'}
@@ -334,7 +324,7 @@ export default function VictimDashboard() {
           <div className="flex-1 overflow-y-auto p-5 space-y-3">
             {messages.length === 0 && (
               <div className="flex flex-col items-center justify-center h-full text-slate-600">
-                <div className="w-16 h-16 rounded-full bg-[#0f2042] flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-[var(--color-bg-secondary)] flex items-center justify-center mb-4">
                   <i className="fa-solid fa-message text-2xl opacity-30"></i>
                 </div>
                 <p className="text-sm font-semibold">No messages yet</p>
@@ -344,9 +334,9 @@ export default function VictimDashboard() {
             {messages.map((msg: any) => (
               <div key={msg.id} className={`flex ${msg.senderRole === 'VICTIM' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[75%] rounded-2xl px-4 py-3 ${
-                  msg.senderRole === 'VICTIM' 
-                    ? 'bg-gradient-to-r from-[#4a0e8f] to-[#6b21a8] text-white rounded-br-md' 
-                    : 'bg-[#0f2042] border border-[#d4a843]/20 text-slate-200 rounded-bl-md'
+                  msg.senderRole === 'VICTIM'
+                    ? 'gradient-purple-dark text-white rounded-br-md'
+                    : 'bg-[var(--color-bg-secondary)] border border-[var(--color-gold)]/20 text-slate-200 rounded-bl-md'
                 } ${msg.offline ? 'opacity-70 border-dashed' : ''}`}>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">
@@ -362,7 +352,7 @@ export default function VictimDashboard() {
             <div ref={chatEndRef}></div>
           </div>
 
-          <div className="p-4 border-t border-white/5 bg-[#0f2042]/40 shrink-0">
+          <div className="p-4 border-t border-white/5 bg-[var(--color-bg-secondary)]/40 shrink-0">
             <div className="flex gap-2">
               <input
                 type="text"
@@ -370,11 +360,11 @@ export default function VictimDashboard() {
                 onChange={e => setNewMessage(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && sendMessage()}
                 placeholder={isOnline ? "Type a message to rescue command..." : "Message queued for sync..."}
-                className="flex-1 bg-[#0a1628] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500/50 transition placeholder-slate-600"
+                className="flex-1 bg-[var(--color-bg-primary)] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500/50 transition placeholder-slate-600"
               />
-              <button 
+              <button
                 onClick={sendMessage}
-                className="px-5 py-3 bg-gradient-to-r from-[#4a0e8f] to-[#7c3aed] text-white font-bold rounded-xl active:scale-95 transition-all shadow-lg shadow-purple-500/20"
+                className="px-5 py-3 gradient-purple text-white font-bold rounded-xl active:scale-95 transition-all shadow-lg shadow-purple-500/20"
               >
                 <i className="fa-solid fa-paper-plane"></i>
               </button>

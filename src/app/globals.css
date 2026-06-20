@@ -1,20 +1,56 @@
 @import "tailwindcss";
 
-
 :root {
-  --royal-purple: #4a0e8f;
-  --deep-purple: #2d0a54;
-  --navy-blue: #0a1628;
-  --navy-mid: #0f2042;
-  --gold: #d4a843;
-  --gold-light: #f0d78c;
-  --gold-bright: #ffd700;
-  --accent-blue: #3b82f6;
+  /* Background palette */
+  --color-bg-primary: #0a1628;
+  --color-bg-secondary: #0f2042;
+  --color-bg-deep: #080e1a;
+
+  /* Purple palette */
+  --color-purple-deep: #2d0a54;
+  --color-purple-royal: #4a0e8f;
+  --color-purple-mid: #5b1aab;
+  --color-purple-core: #7c3aed;
+  --color-purple-light: #8b5cf6;
+  --color-purple-lighter: #a855f7;
+  --color-purple-dark: #6b21a8;
+
+  /* Gold palette */
+  --color-gold: #d4a843;
+  --color-gold-light: #f0d78c;
+  --color-gold-bright: #ffd700;
+
+  /* Accent */
+  --color-accent-blue: #3b82f6;
+
+  /* Status colors */
+  --color-status-critical: #ef4444;
+  --color-status-high: #f97316;
+  --color-status-medium: #eab308;
+  --color-status-dispatched: #f59e0b;
+  --color-status-resolved: #10b981;
+
+  /* Text colors */
+  --color-text-primary: #ededed;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-text-faint: #475569;
+
+  /* Typography */
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Spacing scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
 }
 
 @theme inline {
-  --color-background: var(--navy-blue);
-  --color-foreground: #ededed;
+  --color-background: var(--color-bg-primary);
+  --color-foreground: var(--color-text-primary);
   --font-sans: 'Outfit', var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono);
 }
@@ -22,9 +58,9 @@
 * { box-sizing: border-box; }
 
 body {
-  background: var(--navy-blue);
-  color: #ededed;
-  font-family: 'Outfit', 'Inter', sans-serif;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -47,7 +83,7 @@ body {
 
 /* Gold shimmer text */
 .gold-shimmer {
-  background: linear-gradient(90deg, #d4a843 0%, #f0d78c 25%, #ffd700 50%, #f0d78c 75%, #d4a843 100%);
+  background: linear-gradient(90deg, var(--color-gold) 0%, var(--color-gold-light) 25%, var(--color-gold-bright) 50%, var(--color-gold-light) 75%, var(--color-gold) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -134,14 +170,14 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0a1628; }
-::-webkit-scrollbar-thumb { background: #4a0e8f; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #6b21a8; }
+::-webkit-scrollbar-track { background: var(--color-bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--color-purple-royal); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-purple-core); }
 
-/* Hyper Buttons — Dynamic gradient animation, not just hover */
+/* Hyper Buttons — Dynamic gradient animation */
 .btn-hyper-purple {
   position: relative;
-  background: linear-gradient(135deg, #4a0e8f, #7c3aed, #a855f7, #7c3aed, #4a0e8f);
+  background: linear-gradient(135deg, var(--color-purple-royal), var(--color-purple-core), var(--color-purple-lighter), var(--color-purple-core), var(--color-purple-royal));
   background-size: 400% 400%;
   animation: gradientShift 4s ease infinite, breathe 2s ease-in-out infinite;
   border: none;
@@ -152,7 +188,7 @@ body {
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #7c3aed, #d4a843, #7c3aed);
+  background: linear-gradient(135deg, var(--color-purple-core), var(--color-gold), var(--color-purple-core));
   background-size: 400% 400%;
   animation: gradientShift 3s ease infinite;
   z-index: -1;
@@ -162,7 +198,7 @@ body {
 
 .btn-hyper-gold {
   position: relative;
-  background: linear-gradient(135deg, #92400e, #d4a843, #fbbf24, #d4a843, #92400e);
+  background: linear-gradient(135deg, #92400e, var(--color-gold), var(--color-gold-bright), var(--color-gold), #92400e);
   background-size: 400% 400%;
   animation: gradientShift 4s ease infinite, breathe 2s ease-in-out infinite;
   border: 2px solid rgba(212, 168, 67, 0.3);
@@ -173,7 +209,7 @@ body {
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #d4a843, #fbbf24, #d4a843);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-gold-bright), var(--color-gold));
   background-size: 400% 400%;
   animation: gradientShift 3s ease infinite;
   z-index: -1;
@@ -193,15 +229,26 @@ body {
 
 /* Action button styles for rescuer */
 .btn-action-dispatch {
-  background: linear-gradient(135deg, #d97706, #f59e0b, #fbbf24, #f59e0b, #d97706);
+  background: linear-gradient(135deg, #d97706, var(--color-status-dispatched), #fbbf24, var(--color-status-dispatched), #d97706);
   background-size: 400% 400%;
   animation: gradientShift 3s ease infinite;
   box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
 }
 
 .btn-action-resolve {
-  background: linear-gradient(135deg, #059669, #10b981, #34d399, #10b981, #059669);
+  background: linear-gradient(135deg, #059669, var(--color-status-resolved), #34d399, var(--color-status-resolved), #059669);
   background-size: 400% 400%;
   animation: gradientShift 3s ease infinite;
   box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+}
+
+/* Gradient helper classes */
+.gradient-purple {
+  background: linear-gradient(135deg, var(--color-purple-royal), var(--color-purple-core));
+}
+.gradient-purple-hover {
+  background: linear-gradient(135deg, var(--color-purple-mid), var(--color-purple-light));
+}
+.gradient-purple-dark {
+  background: linear-gradient(135deg, var(--color-purple-royal), var(--color-purple-dark));
 }

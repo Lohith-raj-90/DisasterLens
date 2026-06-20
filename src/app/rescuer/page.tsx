@@ -32,7 +32,6 @@ export default function RescuerTerminal() {
       const data = await res.json();
       if (data.signals) {
         setSignals(data.signals);
-        // Update active signal if it still exists
         if (activeSignal) {
           const updated = data.signals.find((s: any) => s.id === activeSignal.id);
           if (updated) setActiveSignal(updated);
@@ -104,7 +103,7 @@ export default function RescuerTerminal() {
       await fetch('/api/messages/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           content: newMessage,
           recipientId: activeSignal?.userId || null,
           signalId: activeSignal?.id || null
@@ -122,22 +121,21 @@ export default function RescuerTerminal() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-[#0a1628] text-slate-50 overflow-hidden" style={{ fontFamily: "'Outfit', sans-serif" }}>
-      {/* Toast */}
+    <div className="h-screen flex flex-col bg-[var(--color-bg-primary)] text-slate-50 overflow-hidden" style={{ fontFamily: "var(--font-display)" }}>
       {toast && (
         <div className={`fixed top-4 right-4 z-[100] px-5 py-3 rounded-xl shadow-2xl text-sm font-semibold flex items-center gap-2 animate-[slideUp_0.3s_ease] ${
-          toast.type === 'success' ? 'bg-emerald-600 text-white' : 
-          toast.type === 'error' ? 'bg-red-600 text-white' : 
-          'bg-[#4a0e8f] text-white'
+          toast.type === 'success' ? 'bg-emerald-600 text-white' :
+          toast.type === 'error' ? 'bg-red-600 text-white' :
+          'bg-[var(--color-purple-royal)] text-white'
         }`}>
           {toast.msg}
           <button onClick={() => setToast(null)} className="ml-2 opacity-60 hover:opacity-100">✕</button>
         </div>
       )}
-      {/* Header */}
-      <header className="h-16 bg-[#0f2042]/90 border-b border-purple-500/10 flex items-center justify-between px-6 z-20 backdrop-blur-md shrink-0">
+
+      <header className="h-16 bg-[var(--color-bg-secondary)]/90 border-b border-purple-500/10 flex items-center justify-between px-6 z-20 backdrop-blur-md shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-[#4a0e8f] to-[#7c3aed] rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
+          <div className="w-10 h-10 gradient-purple rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
             <i className="fa-solid fa-satellite-dish text-white"></i>
           </div>
           <div>
@@ -161,10 +159,9 @@ export default function RescuerTerminal() {
       </header>
 
       <main className="flex-1 flex overflow-hidden">
-        {/* Sidebar — SOS List */}
-        <aside className="w-[340px] bg-[#0f2042]/40 flex flex-col border-r border-white/5 z-20 shrink-0">
+        <aside className="w-[340px] bg-[var(--color-bg-secondary)]/40 flex flex-col border-r border-white/5 z-20 shrink-0">
           <div className="p-4 border-b border-white/5">
-            <h2 className="font-bold flex items-center gap-2 text-base"><i className="fa-solid fa-layer-group text-[#d4a843]"></i> Active SOS Grid</h2>
+            <h2 className="font-bold flex items-center gap-2 text-base"><i className="fa-solid fa-layer-group text-[var(--color-gold)]"></i> Active SOS Grid</h2>
             <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-semibold">AI MCDM Ranked · Click to inspect</p>
           </div>
           <div className="flex-1 overflow-y-auto p-3 space-y-2">
@@ -174,14 +171,14 @@ export default function RescuerTerminal() {
               const isHigh = score >= 35;
               const rankStr = isCrit ? 'CRITICAL' : (isHigh ? 'HIGH' : 'MEDIUM');
               const statusBadge = getStatusBadge(sig.status);
-              
+
               return (
-                <div 
-                  key={sig.id} 
+                <div
+                  key={sig.id}
                   onClick={() => handleSelect(sig.id)}
-                  className={`p-3 rounded-xl border cursor-pointer hover:bg-[#0f2042] transition-all group ${
-                    activeSignal?.id === sig.id 
-                      ? 'border-[#d4a843]/50 bg-[#0f2042] shadow-[0_0_20px_rgba(212,168,67,0.1)]' 
+                  className={`p-3 rounded-xl border cursor-pointer hover:bg-[var(--color-bg-secondary)] transition-all group ${
+                    activeSignal?.id === sig.id
+                      ? 'border-[var(--color-gold)]/50 bg-[var(--color-bg-secondary)] shadow-[0_0_20px_rgba(212,168,67,0.1)]'
                       : (isCrit ? 'border-red-500/20' : 'border-white/5')
                   }`}
                 >
@@ -198,22 +195,21 @@ export default function RescuerTerminal() {
                     <span className={`${statusBadge.bg} ${statusBadge.text} px-2 py-0.5 rounded-full font-bold`}>{statusBadge.label}</span>
                   </div>
 
-                  {/* Quick action buttons on hover */}
                   <div className="flex gap-1.5 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     {sig.status === 'PENDING' && (
-                      <button 
+                      <button
                         onClick={(e) => { e.stopPropagation(); handleDispatch(sig.id); }}
                         disabled={actionLoading === 'dispatch_' + sig.id}
-                        className="flex-1 py-1.5 bg-gradient-to-r from-amber-600 to-amber-500 text-white text-[10px] font-bold rounded-lg active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-1"
+                        className="flex-1 py-1.5 btn-action-dispatch text-white text-[10px] font-bold rounded-lg active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-1"
                       >
                         <i className="fa-solid fa-helicopter"></i> {actionLoading === 'dispatch_' + sig.id ? '...' : 'Dispatch'}
                       </button>
                     )}
                     {sig.status !== 'RESOLVED' && (
-                      <button 
+                      <button
                         onClick={(e) => { e.stopPropagation(); handleResolve(sig.id); }}
                         disabled={actionLoading === 'resolve_' + sig.id}
-                        className="flex-1 py-1.5 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-[10px] font-bold rounded-lg active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-1"
+                        className="flex-1 py-1.5 btn-action-resolve text-white text-[10px] font-bold rounded-lg active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-1"
                       >
                         <i className="fa-solid fa-check"></i> {actionLoading === 'resolve_' + sig.id ? '...' : 'Resolve'}
                       </button>
@@ -231,15 +227,13 @@ export default function RescuerTerminal() {
           </div>
         </aside>
 
-        {/* Map */}
         <section className="flex-1 relative z-10 w-full h-full">
           <MapComponent signals={signals} activeSignalId={activeSignal?.id} onMarkerClick={handleSelect} />
         </section>
 
-        {/* Right Panel — Tabs */}
-        <aside className="w-[380px] bg-[#0f2042]/60 border-l border-white/5 flex flex-col z-20 shrink-0">
+        <aside className="w-[380px] bg-[var(--color-bg-secondary)]/60 border-l border-white/5 flex flex-col z-20 shrink-0">
           <div className="flex border-b border-white/5 shrink-0">
-            <button onClick={() => setTab('triage')} className={`flex-1 py-3 text-xs font-bold uppercase tracking-widest transition ${tab === 'triage' ? 'text-[#d4a843] border-b-2 border-[#d4a843] bg-[#d4a843]/5' : 'text-slate-500 hover:text-slate-300'}`}>
+            <button onClick={() => setTab('triage')} className={`flex-1 py-3 text-xs font-bold uppercase tracking-widest transition ${tab === 'triage' ? 'text-[var(--color-gold)] border-b-2 border-[var(--color-gold)] bg-[var(--color-gold)]/5' : 'text-slate-500 hover:text-slate-300'}`}>
               <i className="fa-solid fa-brain mr-1"></i> AI Triage
             </button>
             <button onClick={() => setTab('comms')} className={`flex-1 py-3 text-xs font-bold uppercase tracking-widest transition ${tab === 'comms' ? 'text-purple-400 border-b-2 border-purple-400 bg-purple-500/5' : 'text-slate-500 hover:text-slate-300'}`}>
@@ -264,26 +258,25 @@ export default function RescuerTerminal() {
                     </span>
                   </div>
                   <p className="text-[10px] text-slate-500 font-mono">{activeSignal.location_lat?.toFixed(4)}, {activeSignal.location_lng?.toFixed(4)}</p>
-                  
+
                   <div className="mt-3 grid grid-cols-3 gap-2">
-                    <div className="bg-[#0a1628] p-3 rounded-xl border border-white/5 text-center">
+                    <div className="bg-[var(--color-bg-primary)] p-3 rounded-xl border border-white/5 text-center">
                       <p className="text-[9px] uppercase text-slate-500 font-bold mb-1">Battery</p>
                       <p className={`font-bold text-sm ${activeSignal.battery_level < 20 ? 'text-red-400 animate-pulse' : 'text-emerald-400'}`}>{activeSignal.battery_level}%</p>
                     </div>
-                    <div className="bg-[#0a1628] p-3 rounded-xl border border-white/5 text-center">
+                    <div className="bg-[var(--color-bg-primary)] p-3 rounded-xl border border-white/5 text-center">
                       <p className="text-[9px] uppercase text-slate-500 font-bold mb-1">Hazard</p>
                       <p className="font-bold text-sm text-slate-200">{activeSignal.disaster_type}</p>
                     </div>
-                    <div className="bg-[#0a1628] p-3 rounded-xl border border-white/5 text-center">
+                    <div className="bg-[var(--color-bg-primary)] p-3 rounded-xl border border-white/5 text-center">
                       <p className="text-[9px] uppercase text-slate-500 font-bold mb-1">Severity</p>
                       <p className="font-bold text-sm text-orange-400">{activeSignal.injury_severity}</p>
                     </div>
                   </div>
                 </div>
 
-                {/* AI Reasoning */}
-                <div className="bg-[#0a1628] border border-white/5 p-4 rounded-2xl mb-4">
-                  <h4 className="text-[10px] uppercase font-bold text-[#d4a843] mb-3 flex items-center gap-2">
+                <div className="bg-[var(--color-bg-primary)] border border-white/5 p-4 rounded-2xl mb-4">
+                  <h4 className="text-[10px] uppercase font-bold text-[var(--color-gold)] mb-3 flex items-center gap-2">
                     <i className="fa-solid fa-robot"></i> AI Reasoning Payload
                   </h4>
                   <div className="text-xs text-slate-300 font-mono leading-relaxed bg-black/30 p-3 rounded-xl">
@@ -291,16 +284,15 @@ export default function RescuerTerminal() {
                   </div>
                 </div>
 
-                {/* Action Buttons — FUNCTIONAL */}
                 <div className="space-y-2 mt-auto">
                   {activeSignal.status === 'PENDING' && (
-                    <button 
+                    <button
                       onClick={() => handleDispatch(activeSignal.id)}
                       disabled={actionLoading === 'dispatch_' + activeSignal.id}
-                      className="w-full py-3.5 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 text-white font-bold rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] active:scale-[0.97] transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
+                      className="w-full py-3.5 btn-action-dispatch text-white font-bold rounded-xl active:scale-[0.97] transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
                       style={{ animation: 'pulseGlow 2s ease-in-out infinite' }}
                     >
-                      <i className="fa-solid fa-helicopter"></i> 
+                      <i className="fa-solid fa-helicopter"></i>
                       {actionLoading === 'dispatch_' + activeSignal.id ? 'Dispatching...' : 'Dispatch Rescue Unit'}
                     </button>
                   )}
@@ -313,26 +305,26 @@ export default function RescuerTerminal() {
                   )}
 
                   {activeSignal.status !== 'RESOLVED' && (
-                    <button 
+                    <button
                       onClick={() => handleResolve(activeSignal.id)}
                       disabled={actionLoading === 'resolve_' + activeSignal.id}
-                      className="w-full py-3.5 bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 text-white font-bold rounded-xl shadow-[0_4px_20px_rgba(16,185,129,0.3)] active:scale-[0.97] transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
+                      className="w-full py-3.5 btn-action-resolve text-white font-bold rounded-xl active:scale-[0.97] transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
                     >
-                      <i className="fa-solid fa-check-double"></i> 
+                      <i className="fa-solid fa-check-double"></i>
                       {actionLoading === 'resolve_' + activeSignal.id ? 'Resolving...' : 'Mark Resolved & Remove'}
                     </button>
                   )}
 
-                  <button 
+                  <button
                     onClick={() => { setTab('comms'); }}
-                    className="w-full py-3.5 bg-gradient-to-r from-[#4a0e8f] to-[#7c3aed] text-white font-bold rounded-xl shadow-[0_4px_20px_rgba(74,14,143,0.3)] active:scale-[0.97] transition-all flex items-center justify-center gap-2 text-sm"
+                    className="w-full py-3.5 gradient-purple text-white font-bold rounded-xl shadow-[0_4px_20px_rgba(74,14,143,0.3)] active:scale-[0.97] transition-all flex items-center justify-center gap-2 text-sm"
                   >
                     <i className="fa-solid fa-comments"></i> Send Instructions to Victim
                   </button>
 
-                  <button 
+                  <button
                     onClick={() => alert('📡 Mesh broadcast initiated. SOS relay propagated to 3 nearby nodes.')}
-                    className="w-full py-3 bg-[#0a1628] hover:bg-[#0f2042] text-slate-400 font-bold rounded-xl border border-white/5 transition-all active:scale-[0.97] flex items-center justify-center gap-2 text-xs"
+                    className="w-full py-3 bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-secondary)] text-slate-400 font-bold rounded-xl border border-white/5 transition-all active:scale-[0.97] flex items-center justify-center gap-2 text-xs"
                   >
                     <i className="fa-solid fa-tower-broadcast"></i> Broadcast to Mesh Network
                   </button>
@@ -340,7 +332,6 @@ export default function RescuerTerminal() {
               </div>
             )
           ) : (
-            /* Communications Panel */
             <div className="flex-1 flex flex-col">
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {messages.length === 0 ? (
@@ -353,9 +344,9 @@ export default function RescuerTerminal() {
                   messages.map((msg: any) => (
                     <div key={msg.id} className={`flex ${msg.senderRole === 'RESCUER' ? 'justify-end' : 'justify-start'}`}>
                       <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                        msg.senderRole === 'RESCUER' 
-                          ? 'bg-gradient-to-r from-[#4a0e8f] to-[#6b21a8] text-white rounded-br-md' 
-                          : 'bg-[#0a1628] border border-amber-500/20 text-slate-200 rounded-bl-md'
+                        msg.senderRole === 'RESCUER'
+                          ? 'gradient-purple-dark text-white rounded-br-md'
+                          : 'bg-[var(--color-bg-primary)] border border-amber-500/20 text-slate-200 rounded-bl-md'
                       }`}>
                         <div className="text-[9px] font-bold uppercase tracking-wider opacity-60 mb-1">
                           {msg.senderRole === 'VICTIM' ? '🆘 ' : '🛡️ '}{msg.senderName}
@@ -377,11 +368,11 @@ export default function RescuerTerminal() {
                     onChange={e => setNewMessage(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && sendMessage()}
                     placeholder="Send rescue instructions..."
-                    className="flex-1 bg-[#0a1628] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-[#d4a843]/50 transition placeholder-slate-600"
+                    className="flex-1 bg-[var(--color-bg-primary)] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-[var(--color-gold)]/50 transition placeholder-slate-600"
                   />
-                  <button 
+                  <button
                     onClick={sendMessage}
-                    className="px-5 py-3 bg-gradient-to-r from-[#4a0e8f] to-[#7c3aed] text-white font-bold rounded-xl active:scale-95 transition-all shadow-lg shadow-purple-500/20"
+                    className="px-5 py-3 gradient-purple text-white font-bold rounded-xl active:scale-95 transition-all shadow-lg shadow-purple-500/20"
                   >
                     <i className="fa-solid fa-paper-plane"></i>
                   </button>
