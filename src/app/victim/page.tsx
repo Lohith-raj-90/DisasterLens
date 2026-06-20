@@ -154,7 +154,6 @@ export default function VictimDashboard() {
           <span className="text-xs font-bold uppercase tracking-wider text-slate-400">{isOnline ? 'Online' : 'Offline'}</span>
           <div
             className={`toggle-switch ${isOnline ? 'active' : ''}`}
-            style={{ background: isOnline ? 'linear-gradient(135deg, var(--color-purple-royal), var(--color-purple-core))' : '#374151' }}
             onClick={() => { setIsOnline(!isOnline); showToast(isOnline ? '📡 Switched to Mesh Offline Mode' : '🌐 Back Online — Syncing...', 'info'); }}
           >
             <div className="toggle-knob"></div>
@@ -200,7 +199,7 @@ export default function VictimDashboard() {
 
           <div className="flex-1 overflow-y-auto p-5 space-y-3">
             <div>
-              <h3 className="font-bold text-white text-lg mb-0.5 flex items-center gap-2">
+              <h3 className="type-h3 text-white mb-0.5 flex items-center gap-2">
                 <i className="fa-solid fa-hand-holding-medical text-purple-400"></i> Emergency Intel
               </h3>
               <p className="text-[10px] text-slate-500">Fill all fields for accurate AI triage scoring.</p>
@@ -289,7 +288,7 @@ export default function VictimDashboard() {
                 </div>
                 <button
                   onClick={() => setStatus('IDLE')}
-                  className="w-full mt-3 py-2 bg-[var(--color-bg-secondary)] border border-white/10 text-slate-400 text-xs font-bold rounded-xl hover:bg-[var(--color-bg-secondary)]/80 transition active:scale-95"
+                  className="w-full mt-3 py-2 btn-ghost text-xs font-bold rounded-xl active:scale-95"
                 >
                   <i className="fa-solid fa-rotate-left mr-1"></i> Send Another SOS
                 </button>
@@ -298,7 +297,7 @@ export default function VictimDashboard() {
               <button
                 onClick={sendSOS}
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-extrabold text-lg py-4 rounded-2xl shadow-[0_8px_30px_rgba(239,68,68,0.3)] active:scale-95 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                className="w-full btn-sos text-white font-extrabold py-4 rounded-2xl active:scale-95 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
               >
                 <i className="fa-solid fa-satellite-dish"></i> {loading ? 'TRANSMITTING...' : 'TRANSMIT SOS'}
               </button>

@@ -88,14 +88,14 @@ export default function Home() {
             AI Triage Engine v2.0 Active
           </div>
 
-          <h1 className="slide-up slide-up-delay-1 text-5xl sm:text-6xl md:text-8xl font-black tracking-tight mb-6 leading-[1.05]">
+          <h1 className="slide-up slide-up-delay-1 type-hero tracking-tight mb-6 sm:text-6xl md:text-8xl">
             <span className="bg-gradient-to-r from-white via-purple-100 to-purple-300 bg-clip-text text-transparent">Intelligence</span>
             <br/>
             <span className="bg-gradient-to-r from-white via-purple-100 to-purple-300 bg-clip-text text-transparent">in the Midst of </span>
             <span className="gold-shimmer">Chaos</span>
           </h1>
 
-          <p className="slide-up slide-up-delay-2 text-lg md:text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="slide-up slide-up-delay-2 type-body text-slate-400 mb-12 max-w-2xl mx-auto font-light">
             Connecting victims and rescuers through a <strong className="text-purple-300">real-time, explainable, and offline-resilient</strong> AI platform. Prioritizing those in critical need when every second counts.
           </p>
 
@@ -130,7 +130,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-bg-primary)] via-[var(--color-bg-secondary)] to-[var(--color-bg-primary)] pointer-events-none"></div>
         <div className="relative z-10 max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black mb-4">
+            <h2 className="type-h1 md:text-5xl mb-4">
               <span className="bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">Core </span>
               <span className="gold-shimmer">Capabilities</span>
             </h2>
@@ -142,8 +142,8 @@ export default function Home() {
                 <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${f.gradient} flex items-center justify-center text-white text-xl mb-5 shadow-lg group-hover:scale-110 transition-transform`}>
                   <i className={f.icon}></i>
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-white">{f.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{f.desc}</p>
+                <h3 className="type-h3 mb-2 text-white">{f.title}</h3>
+                <p className="type-small text-slate-400 leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -158,7 +158,7 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 border border-[var(--color-gold)]/30 bg-[var(--color-gold)]/10 px-4 py-1.5 rounded-full text-[var(--color-gold)] text-xs font-bold tracking-widest uppercase mb-6">
               <i className="fa-solid fa-graduation-cap"></i> Academic Project
             </div>
-            <h2 className="text-4xl md:text-5xl font-black mb-4">
+            <h2 className="type-h1 md:text-5xl mb-4">
               <span className="bg-gradient-to-r from-purple-300 to-purple-500 bg-clip-text text-transparent">Meet the </span>
               <span className="gold-shimmer">Volunteers</span>
             </h2>

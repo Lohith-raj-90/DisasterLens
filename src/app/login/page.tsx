@@ -47,7 +47,7 @@ export default function Login() {
             <div className="w-14 h-14 gradient-purple rounded-2xl flex items-center justify-center text-white text-2xl mb-5 shadow-lg shadow-purple-500/30">
               <i className="fa-solid fa-shield-halved"></i>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-1">Secure Sign In</h2>
+            <h2 className="type-h2 text-white mb-1">Secure Sign In</h2>
             <p className="text-sm text-slate-400">Access your Disaster<span className="gold-shimmer">Lens</span> portal</p>
           </div>
 

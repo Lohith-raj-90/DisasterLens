@@ -161,7 +161,7 @@ export default function RescuerTerminal() {
       <main className="flex-1 flex overflow-hidden">
         <aside className="w-[340px] bg-[var(--color-bg-secondary)]/40 flex flex-col border-r border-white/5 z-20 shrink-0">
           <div className="p-4 border-b border-white/5">
-            <h2 className="font-bold flex items-center gap-2 text-base"><i className="fa-solid fa-layer-group text-[var(--color-gold)]"></i> Active SOS Grid</h2>
+            <h2 className="type-h3 flex items-center gap-2"><i className="fa-solid fa-layer-group text-[var(--color-gold)]"></i> Active SOS Grid</h2>
             <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-semibold">AI MCDM Ranked · Click to inspect</p>
           </div>
           <div className="flex-1 overflow-y-auto p-3 space-y-2">
@@ -252,7 +252,7 @@ export default function RescuerTerminal() {
               <div className="flex-1 p-4 flex flex-col overflow-y-auto">
                 <div className="mb-4">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-lg font-bold text-white">{activeSignal.user?.name}</h3>
+                    <h3 className="type-h3 text-white">{activeSignal.user?.name}</h3>
                     <span className={`text-[9px] px-2 py-1 rounded-full font-bold ${getStatusBadge(activeSignal.status).bg} ${getStatusBadge(activeSignal.status).text}`}>
                       {getStatusBadge(activeSignal.status).label}
                     </span>
@@ -276,7 +276,7 @@ export default function RescuerTerminal() {
                 </div>
 
                 <div className="bg-[var(--color-bg-primary)] border border-white/5 p-4 rounded-2xl mb-4">
-                  <h4 className="text-[10px] uppercase font-bold text-[var(--color-gold)] mb-3 flex items-center gap-2">
+                  <h4 className="type-xs uppercase font-bold text-[var(--color-gold)] mb-3 flex items-center gap-2">
                     <i className="fa-solid fa-robot"></i> AI Reasoning Payload
                   </h4>
                   <div className="text-xs text-slate-300 font-mono leading-relaxed bg-black/30 p-3 rounded-xl">
@@ -289,8 +289,7 @@ export default function RescuerTerminal() {
                     <button
                       onClick={() => handleDispatch(activeSignal.id)}
                       disabled={actionLoading === 'dispatch_' + activeSignal.id}
-                      className="w-full py-3.5 btn-action-dispatch text-white font-bold rounded-xl active:scale-[0.97] transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
-                      style={{ animation: 'pulseGlow 2s ease-in-out infinite' }}
+                      className="w-full py-3.5 btn-action-dispatch-pulse text-white font-bold rounded-xl active:scale-[0.97] transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
                     >
                       <i className="fa-solid fa-helicopter"></i>
                       {actionLoading === 'dispatch_' + activeSignal.id ? 'Dispatching...' : 'Dispatch Rescue Unit'}
@@ -324,7 +323,7 @@ export default function RescuerTerminal() {
 
                   <button
                     onClick={() => alert('📡 Mesh broadcast initiated. SOS relay propagated to 3 nearby nodes.')}
-                    className="w-full py-3 bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-secondary)] text-slate-400 font-bold rounded-xl border border-white/5 transition-all active:scale-[0.97] flex items-center justify-center gap-2 text-xs"
+                    className="w-full py-3 btn-ghost font-bold rounded-xl active:scale-[0.97] flex items-center justify-center gap-2 text-xs"
                   >
                     <i className="fa-solid fa-tower-broadcast"></i> Broadcast to Mesh Network
                   </button>
