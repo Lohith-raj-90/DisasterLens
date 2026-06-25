@@ -3,25 +3,38 @@ import bcrypt from 'bcryptjs';
 import { signToken } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { loginSchema } from '@/lib/validations';
+import { checkRateLimit } from '@/lib/rateLimit';
+
+const GENERIC_ERROR = 'Invalid credentials';
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const parsed = loginSchema.safeParse(body);
     if (!parsed.success) {
-      return NextResponse.json({ error: parsed.error.issues[0]?.message || 'Validation error' }, { status: 400 });
+      return NextResponse.json({ error: GENERIC_ERROR }, { status: 401 });
     }
 
     const { name, password } = parsed.data;
+
+    const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+    const { allowed, retryAfterMs } = checkRateLimit(`login:${ip}`);
+    if (!allowed) {
+      return NextResponse.json(
+        { error: `Too many attempts. Try again in ${Math.ceil(retryAfterMs / 60000)} minutes.` },
+        { status: 429 }
+      );
+    }
+
     const user = await db.user.findFirst({ where: { name: { equals: name } } });
 
     if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      return NextResponse.json({ error: GENERIC_ERROR }, { status: 401 });
     }
 
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
-      return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
+      return NextResponse.json({ error: GENERIC_ERROR }, { status: 401 });
     }
 
     const token = signToken(user.id, user.role);
