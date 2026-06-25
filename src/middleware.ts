@@ -1,19 +1,30 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export function middleware(request: NextRequest) {
     const token = request.cookies.get('dl_token')?.value;
     const { pathname } = request.nextUrl;
 
-    // Protected routes
     const protectedRoutes = ['/victim', '/rescuer'];
     const isProtected = protectedRoutes.some(r => pathname.startsWith(r));
 
-    if (isProtected && !token) {
-        return NextResponse.redirect(new URL('/login', request.url));
+    if (isProtected) {
+        if (!token) {
+            return NextResponse.redirect(new URL('/login', request.url));
+        }
+        try {
+            if (!JWT_SECRET) throw new Error('JWT_SECRET not configured');
+            jwt.verify(token, JWT_SECRET);
+        } catch {
+            const response = NextResponse.redirect(new URL('/login', request.url));
+            response.cookies.delete('dl_token');
+            return response;
+        }
     }
 
-    // If already logged in and visiting login page, let them through (they may want to switch roles)
     return NextResponse.next();
 }
 

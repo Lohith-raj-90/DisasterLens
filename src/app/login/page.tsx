@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/Input';
 export default function Login() {
   const router = useRouter();
   const [name, setName] = useState('');
-  const [password, setPassword] = useState('disaster123');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 

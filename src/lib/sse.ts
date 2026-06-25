@@ -57,7 +57,7 @@ export async function handleSSEConnection(req: Request) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  const clientId = `client_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+  const clientId = `client_${Date.now()}_${crypto.randomUUID().slice(0, 12)}`;
 
   const stream = new ReadableStream({
     start(controller) {

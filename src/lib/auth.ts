@@ -1,7 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'disaster-lens-super-secret-key-2024';
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const signToken = (userId: string, role: string) => {
     return jwt.sign({ userId, role }, JWT_SECRET, { expiresIn: '1d' });
